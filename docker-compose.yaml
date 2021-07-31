@@ -1,0 +1,51 @@
+version: '3'
+services:
+
+  alias_web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${APP_HOST}:${APP_PORT}:8000
+    env_file:
+      - .env
+    depends_on:
+      - alias_db
+    networks:
+      - alias-network
+    volumes:
+      - ./static:/app/frontend/static
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+    command: sh run_web.sh
+
+
+  alias_db:
+    image: postgres:13
+    restart: always
+    container_name: alias_db
+    env_file:
+      - .env
+    networks:
+      - alias-network
+    expose:
+      - "5432"
+    ports:
+      - 127.0.0.1:5432:5432
+    volumes:
+      - alias_db_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+
+networks:
+  alias-network:
+    external: false
+
+volumes:
+  alias_db_volume:
+    external: false

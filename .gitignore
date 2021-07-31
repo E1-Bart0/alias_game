@@ -1,0 +1,24 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+coverage.xml
+.pytest_cache/
+
+# Environments
+*env/
+.env
+.python-version
+
+# Pycharm
+../.idea/
+
+# Logs
+*.log
+
+# Node.js
+alias/frontend/node_modules/

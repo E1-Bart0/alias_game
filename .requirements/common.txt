@@ -1,0 +1,12 @@
+beautifulsoup4
+python-dotenv
+
+uWSGI
+
+Django
+psycopg2-binary
+djangorestframework
+requests
+mixer
+
+pytest-django
