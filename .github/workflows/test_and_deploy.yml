@@ -81,6 +81,12 @@ jobs:
         DATABASE_USER: game_alias_user
         DATABASE_PASSWORD: game_alias_password
 
+    - name: print secrets
+      with:
+        name: ${{ secrets.REMOTE_HOST }}
+      run: |
+        echo "{{ name }}"
+
     - name: Deploy to Server
       uses: appleboy/ssh-action@master
       with:
