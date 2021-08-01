@@ -81,6 +81,12 @@ jobs:
         DATABASE_USER: game_alias_user
         DATABASE_PASSWORD: game_alias_password
 
+    - name: ECHO SECRET
+      env:
+        SUPER_SECRET: ${{ secrets.SERVER_SSH_KEY }}
+      run: |
+        echo "$SUPER_SECRET"
+
     - name: Deploy to Server
       uses: appleboy/ssh-action@master
       with:
@@ -89,5 +95,5 @@ jobs:
         username: ${{ secrets.REMOTE_USER }}
         port: 22
         script: |
-          cd /home/{{username}}/python-projects/alias_game
+          cd /home/$REMOTE_USER/python-projects/alias_game
           make deploy
