@@ -16,3 +16,17 @@ pip install -r requirements.txt
 python Alias/manage.py runserver
 
 В браузере переходим на http://127.0.0.1:8000
+
+env.
+prod:
+APP_HOST=0.0.0.0
+APP_PORT=80
+DATABASE_HOST=alias_db
+docker:
+APP_HOST=0.0.0.0
+APP_PORT=8000
+DATABASE_HOST=alias_db
+local:
+APP_HOST=127.0.0.1
+APP_PORT=8000
+DATABASE_HOST=127.0.0.

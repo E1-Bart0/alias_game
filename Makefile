@@ -1,3 +1,10 @@
+deploy:
+	git pull
+	docker-compose up --build alias_db alias_web alias_nginx
+
+run_docker:
+	docker-compose up --build alias_docker alias_db
+
 install_requirements:
 	pip install -r ./.requirements/common.txt
 
@@ -11,7 +18,3 @@ lint:
 	black alias
 	isort alias
 	flake8 alias
-
-deploy:
-	git pull
-	docker-compose up -d --build
