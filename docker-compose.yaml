@@ -1,28 +1,6 @@
 version: '3'
 services:
 
-  alias_web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - ${APP_HOST}:${APP_PORT}:8000
-    env_file:
-      - .env
-    depends_on:
-      - alias_db
-    networks:
-      - alias-network
-    volumes:
-      - ./static:/app/frontend/static
-    logging:
-      driver: "json-file"
-      options:
-        max-file: "5"
-        max-size: "10m"
-    command: sh run_web.sh
-
-
   alias_db:
     image: postgres:13
     restart: always
@@ -32,7 +10,7 @@ services:
     networks:
       - alias-network
     expose:
-      - "5432"
+      - 5432
     ports:
       - 127.0.0.1:5432:5432
     volumes:
@@ -42,10 +20,59 @@ services:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
 
+
+  alias_web:
+    container_name: alias_web
+    build:
+      context: .
+      dockerfile: dockerfiles/docker_django.conf
+    env_file:
+      - .env
+    ports:
+      - ${APP_HOST}:${APP_PORT}:8000
+    expose:
+      - 8000
+    depends_on:
+      - alias_db
+    networks:
+      - alias-network
+    volumes:
+      - sock:/sock
+      - staticfiles:/app/staticfiles
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+    command: sh run_web.sh
+
+
+  alias_nginx:
+    restart: always
+    container_name: alias_nginx
+    build:
+      context: .
+      dockerfile: dockerfiles/docker_nginx.conf
+    ports:
+      - 80:80
+    depends_on:
+      - alias_web
+    networks:
+      - alias-network
+    volumes:
+      - sock:/sock
+      - staticfiles:/staticfiles
+
 networks:
   alias-network:
     external: false
 
 volumes:
+  staticfiles:
+    external: false
+
+  sock:
+    external: false
+
   alias_db_volume:
     external: false

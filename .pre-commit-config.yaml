@@ -16,7 +16,7 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/psf/black
-    rev: 21.6b0
+    rev: 21.7b0
     hooks:
       - id: black
   - repo: https://gitlab.com/pycqa/flake8/
@@ -32,4 +32,4 @@ repos:
           - flake8-eradicate==1.0.0
           - flake8-mutable==1.2.0
           - flake8-print==4.0.0
-        - pep8-naming==0.11.1
+          - pep8-naming==0.11.1
