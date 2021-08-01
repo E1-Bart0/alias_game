@@ -13,4 +13,5 @@ lint:
 	flake8 alias
 
 deploy:
-	docker-compose up --build
+	git pull
+	docker-compose up -d --build

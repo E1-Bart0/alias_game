@@ -1,11 +1,11 @@
 from game_room.models import Room
 from game_room.services import game_logic
 from my_auth.authentication import AuthenticationBySession
-from player.services import words_logic
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from word.serializers import GuessWordSerializer
+from word.services import words_logic
 
 
 class NewWordStopTimerView(APIView):

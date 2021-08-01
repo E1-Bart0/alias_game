@@ -76,10 +76,10 @@ WSGI_APPLICATION = "conf.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DATABASE_NAME"),
-        "USER": os.getenv("DATABASE_USER"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-        "HOST": os.getenv("DATABASE_HOST"),
+        "NAME": os.getenv("DATABASE_NAME", "alias_db"),
+        "USER": os.getenv("DATABASE_USER", "game_alias_user"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD", "game_alias_password"),
+        "HOST": os.getenv("DATABASE_HOST", "127.0.0.1"),
         "PORT": os.getenv("DATABASE_PORT", "5432"),
     }
 }
@@ -122,6 +122,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-# STATIC_URL = "frontend/static/"
+# STATIC_URL = "frontend/static/"  # noqa: E800
 STATIC_URL = "/staticfiles/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")

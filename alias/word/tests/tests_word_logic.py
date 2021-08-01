@@ -1,9 +1,9 @@
 import pytest
 from game_room.models import Room
 from mixer.backend.django import mixer
-from player.services import words_logic
-from player.services.words_logic import WORDS_COUNT
 from word.models import EasyWord
+from word.services import words_logic
+from word.services.words_logic import WORDS_COUNT
 
 pytestmark = pytest.mark.django_db
 
