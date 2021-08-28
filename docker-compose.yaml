@@ -10,7 +10,7 @@ services:
     networks:
       - alias-network
     ports:
-      - ${DATABASE_PORT}:5432
+      - "127.0.0.1:${DATABASE_PORT}:5432"
     volumes:
       - alias_db_volume:/var/lib/postgresql/data
     environment:
@@ -21,6 +21,7 @@ services:
 
   alias_web:
     container_name: alias_web
+    image: alias-server
     build:
       context: .
       dockerfile: dockerfiles/docker_django.conf
@@ -50,7 +51,7 @@ services:
     env_file:
       - .env
     ports:
-      - ${APP_PORT}:80
+      - "${APP_PORT}:80"
     expose:
       - 80
     depends_on:
@@ -70,7 +71,7 @@ services:
     env_file:
       - .env
     ports:
-      - ${APP_HOST}:${APP_PORT}:8000
+      - "${APP_HOST}:${APP_PORT}:8000"
     depends_on:
       - alias_db
     networks:
