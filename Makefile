@@ -1,9 +1,9 @@
 deploy:
 	git pull
-	docker-compose up --build alias_db alias_web alias_nginx
+	docker-compose up --build -d alias_db alias_web alias_nginx
 
 run_docker:
-	docker-compose up --build alias_docker alias_db
+	docker-compose up --build -d alias_docker alias_db
 
 install_requirements:
 	pip install -r ./.requirements/common.txt
