@@ -1,6 +1,6 @@
 from django.urls import path
-
 from my_auth.views import GetOrUpdateUserView
+
 from .views import ShufflePlayersView
 
 urlpatterns = [
