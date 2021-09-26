@@ -92,10 +92,10 @@ It launched on http://127.0.0.1:8000/
 
 |   keys            | DEPLOY  | Docker  |   Local   |
 |  -------          | -----   |------   |    -----  |
-| APP_HOST          | 0.0.0.0 | 0.0.0.0 | 127.0.0.1 |
-| APP_PORT          |   80    |  8000   | 8000      |
+| APP_HOST          | 127.0.0.1 |0.0.0.0|127.0.0.1|
+| APP_PORT          |   8000    |||
 | SECRET_KEY        | 015-ip(il1)_sd4mn1bh%$m$x3rl!ait1)u-+5i)dd7pcr4bp4 |||
-| ALLOWED_HOSTS     | *                             |||
+| ALLOWED_HOSTS     | localhost                             |||
 | DEBUG             | False   | True    |  True     |
 | DATABASE_HOST     | alias_db| alias_db| 127.0.0.1 |
 | DATABASE_PORT     | 5432                          |||
