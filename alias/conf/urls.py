@@ -1,7 +1,22 @@
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework.documentation import include_docs_urls
-from rest_framework.schemas import get_schema_view
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Snippets API",
+        default_version="v1",
+        description="Description for API",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=False,
+    permission_classes=(permissions.IsAuthenticated,),
+)
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -9,12 +24,10 @@ urlpatterns = [
     path("api/", include("game_room.urls")),
     path("api/", include("word.urls")),
     path("", include("frontend.urls")),
-    path("docs", include_docs_urls(title="Alias-API")),
     path(
-        "schema",
-        get_schema_view(
-            title="Alias-Game", description="API for all things", version="1.0.0"
-        ),
-        name="openapi-schema",
+        "swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
     ),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]

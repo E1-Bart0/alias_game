@@ -29,9 +29,11 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles",
+    "django.contrib.staticfiles",  # required for serving swagger ui's css/js files
     "django.contrib.postgres",
     "rest_framework",
+    "drf_yasg",
+    # apps
     "my_auth",
     "game_room",
     "player",
@@ -125,5 +127,3 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # STATIC_URL = "frontend/static/"  # noqa: E800
 STATIC_URL = "/staticfiles/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-REST_FRAMEWORK = {"DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema"}
