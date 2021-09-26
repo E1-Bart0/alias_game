@@ -90,4 +90,5 @@ jobs:
         port: 22
         script: |
           cd /home/ubuntu/python-projects/alias_game
+          git pull
           make deploy

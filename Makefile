@@ -1,5 +1,4 @@
 deploy:
-	git pull
 	docker-compose up --build -d alias_db alias_web alias_nginx
 
 run_docker:
