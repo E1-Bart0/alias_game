@@ -125,3 +125,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # STATIC_URL = "frontend/static/"  # noqa: E800
 STATIC_URL = "/staticfiles/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+REST_FRAMEWORK = {"DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema"}

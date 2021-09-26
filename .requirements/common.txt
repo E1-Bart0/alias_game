@@ -9,4 +9,8 @@ djangorestframework
 requests
 mixer
 
+pyyaml
+uritemplate
+coreapi
+
 pytest-django
