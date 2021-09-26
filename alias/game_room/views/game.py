@@ -1,5 +1,10 @@
+from drf_yasg.utils import swagger_auto_schema
 from game_room.models import Room
-from game_room.serializers.room import FindRoomCodeSerializer, FindRoomSerializer
+from game_room.serializers.room import (
+    FindRoomCodeSerializer,
+    FindRoomSerializer,
+    RoomNameSerializer,
+)
 from game_room.services import game_logic, room_logic
 from my_auth.authentication import AuthenticationBySession
 from player.serializer import PlayerSerializer
@@ -13,6 +18,11 @@ class LeaveGameView(APIView):
     authentication_classes = [AuthenticationBySession]
     serializer_class = FindRoomCodeSerializer
 
+    @swagger_auto_schema(
+        operation_description="Leave From Room",
+        request_body=serializer_class(),
+        responses={"200": ""},
+    )
     def post(self, request):
         user = request.user
         serializer = self.serializer_class(
@@ -30,6 +40,11 @@ class StartStopGameView(APIView):
     serializer_class = FindRoomSerializer
     serializer = PlayerSerializer
 
+    @swagger_auto_schema(
+        operation_description="Start Game",
+        request_body=serializer_class(),
+        responses={"200": serializer_class()},
+    )
     def patch(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -39,6 +54,11 @@ class StartStopGameView(APIView):
         return Response(self.serializer(player).data, status=200)
 
     @staticmethod
+    @swagger_auto_schema(
+        operation_description="Stop Game",
+        request_body=RoomNameSerializer(),
+        responses={"200": ""},
+    )
     def post(request):
         room = get_object_or_404(Room, room=request.data.get("room"))
         game_logic.stop_game(room)
@@ -49,6 +69,11 @@ class RestartGameView(APIView):
     authentication_classes = [AuthenticationBySession]
 
     @staticmethod
+    @swagger_auto_schema(
+        operation_description="Restart Game",
+        request_body=RoomNameSerializer(),
+        responses={"200": ""},
+    )
     def post(request):
         room = get_object_or_404(Room, room=request.data.get("room_code"))
         game_logic.restart_game(room)

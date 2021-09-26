@@ -1,3 +1,4 @@
+from drf_yasg.utils import swagger_auto_schema
 from game_room.serializers.game import PrepareToGameSerializer
 from game_room.serializers.room import FindRoomCodeSerializer
 from my_auth.authentication import AuthenticationBySession
@@ -13,9 +14,14 @@ class PlayerCreateUpdateView(APIView):
     serializer_class = FindRoomCodeSerializer
     response_serializer = PrepareToGameSerializer
 
+    @swagger_auto_schema(
+        operation_description="Update Player",
+        request_body=serializer_class(),
+        responses={"200": response_serializer()},
+    )
     def patch(self, request):
         user = request.user
-        serializer = FindRoomCodeSerializer(
+        serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )
         if not serializer.is_valid():
@@ -29,6 +35,11 @@ class PlayerCreateUpdateView(APIView):
         return Response(self.response_serializer(data).data, 200)
 
     @staticmethod
+    @swagger_auto_schema(
+        operation_description="Create Player",
+        request_body=PlayerUpdateSerializer(),
+        responses={"200": ""},
+    )
     def post(request):
         user = request.user
         serializer = PlayerUpdateSerializer(

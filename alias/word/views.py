@@ -1,4 +1,6 @@
+from drf_yasg.utils import swagger_auto_schema
 from game_room.models import Room
+from game_room.serializers.room import RoomNameSerializer
 from game_room.services import game_logic
 from my_auth.authentication import AuthenticationBySession
 from rest_framework.generics import get_object_or_404
@@ -12,6 +14,11 @@ class NewWordStopTimerView(APIView):
     authentication_classes = [AuthenticationBySession]
 
     @staticmethod
+    @swagger_auto_schema(
+        operation_description="Start Timer",
+        request_body=RoomNameSerializer(),
+        responses={"200": ""},
+    )
     def patch(request):
         room = get_object_or_404(Room, room=request.data.get("room"))
         game_logic.start_or_stop_room_timer(room, start=True)
@@ -19,6 +26,11 @@ class NewWordStopTimerView(APIView):
         return Response({}, status=200)
 
     @staticmethod
+    @swagger_auto_schema(
+        operation_description="Stop Timer",
+        request_body=RoomNameSerializer(),
+        responses={"200": ""},
+    )
     def post(request):
         room = get_object_or_404(Room, room=request.data.get("room"))
         game_logic.start_or_stop_room_timer(room, start=False)
@@ -29,6 +41,11 @@ class GuessWordView(APIView):
     authentication_classes = [AuthenticationBySession]
     serializer_class = GuessWordSerializer
 
+    @swagger_auto_schema(
+        operation_description="Change Word to Guessed",
+        request_body=serializer_class(),
+        responses={"200": ""},
+    )
     def patch(self, request):
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
