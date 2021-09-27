@@ -2,18 +2,18 @@ deploy:
 	docker-compose up --build -d alias_nginx
 
 run_docker:
-	docker-compose up --build -d alias_docker
+	docker-compose up --build -d alias_web
 
 install_requirements:
-	pip install -r ./.requirements/common.txt
+	poetry install --no-dev
 
 install_linters:
-	pip install -r ./.requirements/linters.txt
-	pre-commit install
-	pre-commit install --hook-type commit-msg
-	pre-commit autoupdate
+	poetry install
+	poetry run pre-commit install
+	poetry run pre-commit install --hook-type commit-msg
+	poetry run pre-commit autoupdate
 
 lint:
-	black alias
-	isort alias
-	flake8 alias
+	poetry run black alias
+	poetry run isort alias
+	poetry run flake8 alias

@@ -8,8 +8,8 @@ on:
       - '**.py'
       - '.github/workflows/**'
       - '.flake8'
-      - './.requirements/linters.txt'
-      - './.requirements/common.txt'
+      - 'poetry.lock'
+      - 'pyproject.toml'
   pull_request:
     types:
       - opened
@@ -20,8 +20,8 @@ on:
       - '**.py'
       - '.github/workflows/**'
       - '.flake8'
-      - './.requirements/linters.txt'
-      - './.requirements/common.txt'
+      - 'poetry.lock'
+      - 'pyproject.toml'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 
@@ -33,6 +33,8 @@ jobs:
       postgres:
         image: postgres:latest
         env:
+          ENV: dev
+          POETRY_VERSION: 1.1.10
           POSTGRES_DB: alias_db
           POSTGRES_USER: game_alias_user
           POSTGRES_PASSWORD: game_alias_password
@@ -55,24 +57,25 @@ jobs:
 
     - name: install dependencies
       run: |
-        pip install -r ./.requirements/common.txt
-        pip install -r ./.requirements/linters.txt
+        pip install poetry==${POETRY_VERSION}
+        poetry config virtualenvs.create false \
+          && poetry install $(test "$ENV" == prod && echo "--no-dev") --no-interaction --no-ansi
 
     - name: Black check
       run: |
-        black . --check
+        poetry run black . --check
 
     - name: Isort check
       run: |
-        isort . --check -q
+        poetry run isort . --check -q
 
     - name: Lint with flake8
       run: |
-        flake8 . --format="::error file=%(path)s,line=%(row)d,col=%(col)d::%(path)s:%(row)d:%(col)d: %(code)s %(text)s"
+        poetry run flake8 . --format="::error file=%(path)s,line=%(row)d,col=%(col)d::%(path)s:%(row)d:%(col)d: %(code)s %(text)s"
 
     - name: Test with pytest
       run: |
-        pytest alias
+        poetry run pytest alias
       env:
         SECRET_KEY: "015-ip(il1)_sd4mn1bh%$m$x3rl!ait1)u-+5i)dd7pcr4bp4"
         DATABASE_HOST: 127.0.0.1

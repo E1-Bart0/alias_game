@@ -46,18 +46,16 @@ make run_docker
 It launched on http://127.0.0.1:8000/
 
 
-### Local
+### Local via POETRY
 **Requirements**: _Postgresql_ or _Docker_, _python 3.9_
 
 **Virtual environment and ENV:**
 
 ```
-python -m venv .venv
-. .venv/bin/activate
 make install_requirements
 
 cp .env.template .env
-# change .env: DATABASE_HOST=127.0.0.1
+# change .env: DATABASE_HOST=127.0.0.1, ENV=dev
 ```
 
 **Postgresql in Docker:**
@@ -92,8 +90,10 @@ It launched on http://127.0.0.1:8000/
 
 |   keys            | DEPLOY  | Docker  |   Local   |
 |  -------          | -----   |------   |    -----  |
+| ENV               | prod    |     dev |   dev     |
+| POETRY_VERSION    |   1.1.10                    |||
 | APP_HOST          | 127.0.0.1 |0.0.0.0|127.0.0.1|
-| APP_PORT          |   8000    |||
+| APP_PORT          |   8000                       |||
 | SECRET_KEY        | 015-ip(il1)_sd4mn1bh%$m$x3rl!ait1)u-+5i)dd7pcr4bp4 |||
 | ALLOWED_HOSTS     | localhost                             |||
 | DEBUG             | False   | True    |  True     |

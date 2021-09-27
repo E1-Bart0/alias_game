@@ -24,6 +24,9 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/docker_django.conf
+      args:
+        POETRY_VERSION: ${POETRY_VERSION}
+        ENV: ${ENV}
     env_file:
       - .env
     depends_on:
@@ -36,7 +39,10 @@ services:
       - alias-network
     volumes:
       - staticfiles:/app/staticfiles
-    command: bash -c "sh run_web.sh && uwsgi --ini uwsgi.ini"
+    environment:
+      POETRY_VERSION: ${POETRY_VERSION}
+      ENV: ${ENV}
+    command: bash -c "bash run_web.sh"
 
   alias_nginx:
     restart: always
@@ -56,24 +62,6 @@ services:
       - alias-network
     volumes:
       - staticfiles:/staticfiles
-
-
-  alias_docker:
-    container_name: alias_docker
-    image: alias-server
-    build:
-      context: .
-      dockerfile: dockerfiles/docker_django.conf
-    env_file:
-      - .env
-    ports:
-      - "${APP_HOST}:${APP_PORT}:8000"
-    depends_on:
-      - alias_db
-    networks:
-      - alias-network
-    command: bash -c "sh run_web.sh && python manage.py runserver ${APP_HOST}:${APP_PORT}"
-
 
 networks:
   alias-network:
