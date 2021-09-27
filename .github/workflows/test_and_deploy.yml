@@ -57,9 +57,9 @@ jobs:
 
     - name: install dependencies
       run: |
-        pip install poetry==${POETRY_VERSION}
+        pip install poetry==${{POETRY_VERSION}}
         poetry config virtualenvs.create false \
-          && poetry install $(test "$ENV" == prod && echo "--no-dev") --no-interaction --no-ansi
+          && poetry install $(test ${{$ENV}} == prod && echo "--no-dev") --no-interaction --no-ansi
 
     - name: Black check
       run: |
