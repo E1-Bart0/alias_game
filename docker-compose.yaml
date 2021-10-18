@@ -37,6 +37,7 @@ services:
       - 8000
     networks:
       - alias-network
+      - web
     volumes:
       - staticfiles:/app/staticfiles
     environment:
@@ -44,32 +45,14 @@ services:
       ENV: ${ENV}
     command: bash -c "bash run_web.sh"
 
-  alias_nginx:
-    restart: always
-    container_name: alias_nginx
-    build:
-      context: .
-      dockerfile: dockerfiles/docker_nginx.conf
-    env_file:
-      - .env
-    ports:
-      - "0.0.0.0:80:80"
-    expose:
-      - 80
-    depends_on:
-      - alias_web
-    networks:
-      - alias-network
-    volumes:
-      - staticfiles:/staticfiles
-
 networks:
   alias-network:
     external: false
 
 volumes:
   staticfiles:
-    external: false
+    external:
+      name: staticfiles-alias
 
   alias_db_volume:
     external: false
