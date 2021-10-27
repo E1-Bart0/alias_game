@@ -2,6 +2,8 @@
 
 Currently, run on this URL: [ALIAS](https://alias.elbarto.ga/)
 
+![Actions Status](https://github.com/E1-Bart0/alias_game/actions/workflows/test_and_deploy.yml/badge.svg)
+
 ## What is an Alias
 
 Alias is a board game, where the objective of the players is to explain words to each other.
