@@ -41,6 +41,9 @@ Also, you can use emoji instead of your nickname [EMOJI](https://unicode-table.c
 ```
 cp .env.template .env
 # If it needed change .env
+# Create external network and volume
+make create_external
+# Launch the service
 make run_docker
 ```
 It launched on http://127.0.0.1:8000/
