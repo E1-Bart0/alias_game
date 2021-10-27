@@ -36,6 +36,9 @@ isort = "^5.9.3"
 black = "^21.9b0"
 pre-commit = "^2.15.0"
 mypy = "^0.910"
+types-requests = "^2.25.11"
+django-stubs = "^1.9.0"
+djangorestframework-stubs = "^1.4.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -51,6 +54,10 @@ multi_line_output = 3
 skip_gitignore=true
 
 [tool.mypy]
-disallow_untyped_defs = true
-warn_return_any = true
-warn_unused_configs = true
+plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+mypy_path = "$MYPY_CONFIG_FILE_DIR/alias"
+ignore_missing_imports = true
+
+
+[tool.django-stubs]
+django_settings_module = "alias.conf.settings"
