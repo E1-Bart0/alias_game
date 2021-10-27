@@ -1,5 +1,6 @@
 from drf_yasg.utils import swagger_auto_schema
 from my_auth.authentication import AuthenticationBySession
+from my_auth.request import AuthenticatedRequest
 from my_auth.serializers import UserSerializer, UserUpdateSerializer
 from my_auth.services.user_crud import UserLogic
 from rest_framework.response import Response
@@ -14,7 +15,7 @@ class GetOrUpdateUserView(APIView):
         operation_description="Get User",
         responses={"200": serializer_class()},
     )
-    def get(self, request):
+    def get(self, request: AuthenticatedRequest) -> Response:
         user = request.user
         return Response(self.serializer_class(user).data, status=200)
 
@@ -23,7 +24,7 @@ class GetOrUpdateUserView(APIView):
         request_body=UserUpdateSerializer(),
         responses={"200": serializer_class()},
     )
-    def patch(self, request):
+    def patch(self, request: AuthenticatedRequest) -> Response:
         serializer = UserUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 

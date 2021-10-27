@@ -8,8 +8,8 @@ class AbstractWord(models.Model):
     word = models.CharField(null=False, max_length=255, unique=True)
     img = models.CharField(default=IMG, max_length=255)
 
-    def __str__(self):
-        return self.word
+    def __str__(self) -> str:
+        return str(self.word)
 
     class Meta:
         abstract = True

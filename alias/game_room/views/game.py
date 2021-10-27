@@ -7,6 +7,7 @@ from game_room.serializers.room import (
 )
 from game_room.services import game_logic, room_logic
 from my_auth.authentication import AuthenticationBySession
+from my_auth.request import AuthenticatedRequest
 from player.serializer import PlayerSerializer
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
@@ -23,7 +24,7 @@ class LeaveGameView(APIView):
         request_body=serializer_class(),
         responses={"200": ""},
     )
-    def post(self, request):
+    def post(self, request: AuthenticatedRequest) -> Response:
         user = request.user
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
@@ -45,7 +46,7 @@ class StartStopGameView(APIView):
         request_body=serializer_class(),
         responses={"200": serializer_class()},
     )
-    def patch(self, request):
+    def patch(self, request: AuthenticatedRequest) -> Response:
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         room = serializer.validated_data.pop("room")
@@ -59,7 +60,7 @@ class StartStopGameView(APIView):
         request_body=RoomNameSerializer(),
         responses={"200": ""},
     )
-    def post(request):
+    def post(request: AuthenticatedRequest) -> Response:
         room = get_object_or_404(Room, room=request.data.get("room"))
         game_logic.stop_game(room)
         return Response({}, status=200)
@@ -74,7 +75,7 @@ class RestartGameView(APIView):
         request_body=RoomNameSerializer(),
         responses={"200": ""},
     )
-    def post(request):
+    def post(request: AuthenticatedRequest) -> Response:
         room = get_object_or_404(Room, room=request.data.get("room_code"))
         game_logic.restart_game(room)
         return Response({}, status=200)

@@ -4,6 +4,7 @@ from game_room.serializers.room import RoomNameSerializer
 from game_room.services import game_logic
 from my_auth.authentication import AuthenticationBySession
 from rest_framework.generics import get_object_or_404
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from word.serializers import GuessWordSerializer
@@ -19,7 +20,7 @@ class NewWordStopTimerView(APIView):
         request_body=RoomNameSerializer(),
         responses={"200": ""},
     )
-    def patch(request):
+    def patch(request: Request) -> Response:
         room = get_object_or_404(Room, room=request.data.get("room"))
         game_logic.start_or_stop_room_timer(room, start=True)
         words_logic.add_words_to_room(room)
@@ -31,7 +32,7 @@ class NewWordStopTimerView(APIView):
         request_body=RoomNameSerializer(),
         responses={"200": ""},
     )
-    def post(request):
+    def post(request: Request) -> Response:
         room = get_object_or_404(Room, room=request.data.get("room"))
         game_logic.start_or_stop_room_timer(room, start=False)
         return Response({}, status=200)
@@ -46,7 +47,7 @@ class GuessWordView(APIView):
         request_body=serializer_class(),
         responses={"200": ""},
     )
-    def patch(self, request):
+    def patch(self, request: Request) -> Response:
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )

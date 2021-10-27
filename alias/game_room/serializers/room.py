@@ -34,7 +34,7 @@ class FindRoomCodeSerializer(serializers.ModelSerializer):
 
 
 class UpdateRoomSerializer(FindRoomCodeSerializer):
-    def validate(self, attrs):
+    def validate(self, attrs: dict) -> dict:
         if attrs["room_code"].host != attrs["host"]:
             raise serializers.ValidationError("Can't change not your own room")
         return attrs
