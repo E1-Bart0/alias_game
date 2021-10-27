@@ -11,13 +11,13 @@ create_external:
 install_requirements:
 	poetry install --no-dev
 
-install_linters:
-	poetry install
+install_pre_commit:
 	poetry run pre-commit install
 	poetry run pre-commit install --hook-type commit-msg
 	poetry run pre-commit autoupdate
 
 lint:
-	poetry run black alias
-	poetry run isort alias
-	poetry run flake8 alias
+	poetry run black .
+	poetry run isort .
+	poetry run flake8 .
+	poetry run mypy .
