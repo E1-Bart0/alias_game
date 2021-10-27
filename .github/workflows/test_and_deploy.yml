@@ -75,6 +75,8 @@ jobs:
     - name: MyPy check type hints
       run: |
         poetry run mypy .
+      env:
+        SECRET_KEY: "015-ip(il1)_sd4mn1bh%$m$x3rl!ait1)u-+5i)dd7pcr4bp4"
 
     - name: Test with pytest
       run: |
