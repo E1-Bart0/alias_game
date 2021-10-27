@@ -49,6 +49,10 @@ networks:
   alias-network:
     external: false
 
+  web:
+    external:
+      name: web
+
 volumes:
   staticfiles:
     external:
