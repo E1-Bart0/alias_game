@@ -43,11 +43,19 @@ services:
     environment:
       POETRY_VERSION: ${POETRY_VERSION}
       ENV: ${ENV}
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     command: bash -c "bash run_web.sh"
 
 networks:
   alias-network:
     external: false
+
+  web:
+    external:
+      name: web
+
 
 volumes:
   staticfiles:
