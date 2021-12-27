@@ -72,6 +72,12 @@ jobs:
       run: |
         poetry run flake8 . --format="::error file=%(path)s,line=%(row)d,col=%(col)d::%(path)s:%(row)d:%(col)d: %(code)s %(text)s"
 
+    - name: MyPy check type hints
+      run: |
+        poetry run mypy .
+      env:
+        SECRET_KEY: "015-ip(il1)_sd4mn1bh%$m$x3rl!ait1)u-+5i)dd7pcr4bp4"
+
     - name: Test with pytest
       run: |
         poetry run pytest alias

@@ -12,7 +12,7 @@ class GuessWordSerializer(FindRoomCodeSerializer):
         model = Room
         fields = ("room_code", "host", "team", "word")
 
-    def validate(self, attrs):
+    def validate(self, attrs: dict) -> dict:
         word, room = attrs["word"], attrs["room_code"]
         word = Word.objects.filter(word=word, room=room)
         if not word.exists():

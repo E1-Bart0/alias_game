@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.db import models
 
 
@@ -16,7 +18,7 @@ class Room(models.Model):
     winner = models.CharField(max_length=10, null=True)
     finish_time = models.IntegerField(default=60)
 
-    def update(self, **kwargs):
+    def update(self, **kwargs: Any) -> None:
         for key, value in kwargs.items():
             setattr(self, key, value)
         self.save()

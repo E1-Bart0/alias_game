@@ -2,9 +2,11 @@ from drf_yasg.utils import swagger_auto_schema
 from game_room.serializers.game import PrepareToGameSerializer
 from game_room.serializers.room import FindRoomCodeSerializer
 from my_auth.authentication import AuthenticationBySession
+from my_auth.request import AuthenticatedRequest
 from player.serializer import PlayerUpdateSerializer
 from player.services import player_logic
 from rest_framework import serializers
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -19,7 +21,7 @@ class PlayerCreateUpdateView(APIView):
         request_body=serializer_class(),
         responses={"200": response_serializer()},
     )
-    def patch(self, request):
+    def patch(self, request: AuthenticatedRequest) -> Response:
         user = request.user
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
@@ -40,7 +42,7 @@ class PlayerCreateUpdateView(APIView):
         request_body=PlayerUpdateSerializer(),
         responses={"200": ""},
     )
-    def post(request):
+    def post(request: AuthenticatedRequest) -> Response:
         user = request.user
         serializer = PlayerUpdateSerializer(
             data=request.data, context={"request": request}
@@ -59,7 +61,7 @@ class ShufflePlayersView(APIView):
     authentication_classes = [AuthenticationBySession]
     serializer_class = FindRoomCodeSerializer
 
-    def post(self, request):
+    def post(self, request: AuthenticatedRequest) -> Response:
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )

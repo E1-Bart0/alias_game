@@ -1,6 +1,8 @@
 # Site for online Alias game
 
-Currently, run on this URL: [ALIAS](http://158.101.175.185/)
+Currently, run on this URL: [ALIAS](https://alias.elbarto.ga/)
+
+![Actions Status](https://github.com/E1-Bart0/alias_game/actions/workflows/test_and_deploy.yml/badge.svg)
 
 ## What is an Alias
 
@@ -41,6 +43,9 @@ Also, you can use emoji instead of your nickname [EMOJI](https://unicode-table.c
 ```
 cp .env.template .env
 # If it needed change .env
+# Create external network and volume
+make create_external
+# Launch the service
 make run_docker
 ```
 It launched on http://127.0.0.1:8000/
@@ -77,28 +82,19 @@ python alias/manage.py runserver
 ```
 It launched on http://127.0.0.1:8000/
 
-### Deploy with Nginx
-**Requirements**: _Docker_, _Docker-compose_
-
-```
-cp .env.template .env
-make deploy
-```
-It launched on http://127.0.0.1:8000/
-
 ## env
 
-|   keys            | DEPLOY  | Docker  |   Local   |
-|  -------          | -----   |------   |    -----  |
-| ENV               | prod    |     dev |   dev     |
-| POETRY_VERSION    |   1.1.10                    |||
-| APP_HOST          | 127.0.0.1 |0.0.0.0|127.0.0.1|
-| APP_PORT          |   8000                       |||
-| SECRET_KEY        | 015-ip(il1)_sd4mn1bh%$m$x3rl!ait1)u-+5i)dd7pcr4bp4 |||
-| ALLOWED_HOSTS     | localhost                             |||
-| DEBUG             | False   | True    |  True     |
-| DATABASE_HOST     | alias_db| alias_db| 127.0.0.1 |
-| DATABASE_PORT     | 5432                          |||
-| DATABASE_NAME     | alias_db                      |||
-| DATABASE_USER     | game_alias_user               |||
-| DATABASE_PASSWORD | game_alias_password           |||
+|   keys            |  Docker  |   Local   |
+|  -------          | ------   |    -----  |
+| ENV               |      dev |   dev     |
+| POETRY_VERSION    |   1.1.10                    ||
+| APP_HOST          | 0.0.0.0|127.0.0.1|
+| APP_PORT          |   8000                       ||
+| SECRET_KEY        | 015-ip(il1)_sd4mn1bh%$m$x3rl!ait1)u-+5i)dd7pcr4bp4 ||
+| ALLOWED_HOSTS     | localhost                             ||
+| DEBUG             |  True    |  True     |
+| DATABASE_HOST     |  alias_db| 127.0.0.1 |
+| DATABASE_PORT     | 5432                          ||
+| DATABASE_NAME     | alias_db                      ||
+| DATABASE_USER     | game_alias_user               ||
+| DATABASE_PASSWORD | game_alias_password           ||

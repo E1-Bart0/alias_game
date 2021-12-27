@@ -1,6 +1,7 @@
 import pytest
 from game_room.models import Room
 from mixer.backend.django import mixer
+from my_auth.models import User
 from word.models import EasyWord
 from word.services import words_logic
 from word.services.words_logic import WORDS_COUNT
@@ -8,7 +9,7 @@ from word.services.words_logic import WORDS_COUNT
 pytestmark = pytest.mark.django_db
 
 
-def test_words_logic__add_words_to_room(user):
+def test_words_logic__add_words_to_room(user: User) -> None:
     room = mixer.blend(Room, host=user)
     mixer.cycle(50).blend(EasyWord)
 

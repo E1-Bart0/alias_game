@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+from typing import Any
 
 from django.core.management import BaseCommand
 from word.models import EasyWord, HardWord, MediumWord
@@ -8,7 +9,7 @@ logging.basicConfig(filename="words_db.log", level=logging.DEBUG)
 DB = {"easy": EasyWord, "medium": MediumWord, "hard": HardWord}
 
 
-def fill_db(path: Path, difficult: str):
+def fill_db(path: Path, difficult: str) -> None:
     """Add words to DB
 
     :param path: Path to file with words
@@ -28,7 +29,7 @@ def fill_db(path: Path, difficult: str):
 class Command(BaseCommand):
     help = "Fill DB with words"
 
-    def add_arguments(self, parser):
+    def add_arguments(self, parser: Any) -> None:
         parser.add_argument(
             "-p", "--path", required=True, type=Path, help="path to file with words"
         )
@@ -41,7 +42,7 @@ class Command(BaseCommand):
             choices=("easy", "hard", "medium"),
         )
 
-    def handle(self, *args, **options):
+    def handle(self, *args: Any, **options: Any) -> None:
         logging.info("Start add words to DB with difficult")
         path = options["path"]
         difficulty = options["difficulty"]

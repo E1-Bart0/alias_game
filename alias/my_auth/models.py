@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -9,10 +11,10 @@ class User(AbstractUser):
     color = models.CharField(max_length=10, default="#989898")
     room_code = models.CharField(max_length=10, null=True)
 
-    def update(self, **kwargs):
+    def update(self, **kwargs: Any) -> None:
         for key, value in kwargs.items():
             setattr(self, key, value)
         self.save()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"User-[{self.host}]-[{self.name}]"

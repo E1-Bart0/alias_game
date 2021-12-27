@@ -1,3 +1,4 @@
+from typing import Any
 from unittest.mock import patch
 
 import pytest
@@ -9,14 +10,14 @@ pytestmark = pytest.mark.django_db
 
 
 @patch("random.choices")
-def test_code_generator_if_room_not_found(mock):
+def test_code_generator_if_room_not_found(mock: Any) -> None:
     mock.return_value = ["A", "B", "C", "D", "E", "F"]
     code = generate_unique_code()
     assert code == "ABCDEF"
 
 
 @patch("random.choices")
-def test_code_generator_if_such_room_exists(mock):
+def test_code_generator_if_such_room_exists(mock: Any) -> None:
     mock.side_effect = (
         ["E", "X", "I", "S", "T", "S"],
         ["N", "O", "T", "E", "X", "I", "S", "T", "S"],

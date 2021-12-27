@@ -2,6 +2,7 @@ from drf_yasg.utils import swagger_auto_schema
 from game_room.models import Comments
 from game_room.serializers.comment import CreateCommentSerializer
 from my_auth.authentication import AuthenticationBySession
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -15,7 +16,7 @@ class AddCommentView(APIView):
         request_body=request_serializer_class(),
         responses={"200": ""},
     )
-    def post(self, request):
+    def post(self, request: Request) -> Response:
         serializer = self.request_serializer_class(
             data=request.data, context={"request": request}
         )

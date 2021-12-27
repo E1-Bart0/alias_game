@@ -56,7 +56,6 @@ networks:
     external:
       name: web
 
-
 volumes:
   staticfiles:
     external:

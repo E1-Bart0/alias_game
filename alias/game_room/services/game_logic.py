@@ -17,6 +17,6 @@ def start_game(room: "Room") -> "Player":
     return player_logic.next_player(room)
 
 
-def start_or_stop_room_timer(room: "Room", start=True) -> None:
+def start_or_stop_room_timer(room: "Room", start: bool = True) -> None:
     room.timer = start
     room.save(update_fields=["timer"])

@@ -8,6 +8,7 @@ from game_room.serializers.room import (
 )
 from game_room.services import room_logic
 from my_auth.authentication import AuthenticationBySession
+from my_auth.request import AuthenticatedRequest
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -27,7 +28,7 @@ class GetOrDeleteRoomView(APIView):
         operation_description="Get Player Room",
         responses={"204": "", "200": serializer_class()},
     )
-    def get(self, request):
+    def get(self, request: AuthenticatedRequest) -> Response:
         host_room = request.user.my_room.first()
         if host_room is None:
             return Response({}, status=204)
@@ -40,7 +41,7 @@ class GetOrDeleteRoomView(APIView):
         operation_description="Delete Player Room",
         responses={"201": serializer_class()},
     )
-    def post(request):
+    def post(request: AuthenticatedRequest) -> Response:
         room_logic.delete_prev_room(request.user)
         return Response({}, status=201)
 
@@ -55,7 +56,7 @@ class CreateUpdateRoom(APIView):
         request_body=serializer(),
         responses={"201": response_serializer()},
     )
-    def post(self, request):
+    def post(self, request: AuthenticatedRequest) -> Response:
         user = request.user
         room_serializer = self.serializer(data=request.data)
         room_serializer.is_valid(raise_exception=True)
@@ -69,7 +70,7 @@ class CreateUpdateRoom(APIView):
         request_body=UpdateRoomSerializer(),
         responses={"200": ""},
     )
-    def patch(request):
+    def patch(request: AuthenticatedRequest) -> Response:
         serializer = UpdateRoomSerializer(
             data=request.data, context={"request": request}
         )

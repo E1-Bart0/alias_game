@@ -1,24 +1,23 @@
 import csv
-from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Optional
 
 import requests
 from bs4 import BeautifulSoup
 
 
-def run(path: Path, difficult: str):
+def run(path: str, difficult: str) -> None:
     with open(f"{difficult}.txt", mode="w", encoding="utf-8") as writing_file:
         for word in read_word_from_file(path):
             img = parsing_img(word[0], difficult)
             writing_file.write(f"{word[0]}; {img}\n")
 
 
-def read_word_from_file(path: Path) -> Iterable[list]:
+def read_word_from_file(path: str) -> Iterable[list]:
     with open(path, mode="r", encoding="utf-8") as file:
         return csv.reader(file)
 
 
-def parsing_img(word, difficult):
+def parsing_img(word: str, difficult: str) -> Optional[str]:
     word = word.replace(" ", "%20")
     if difficult == "hard":
         word += "%20кальян"
